@@ -2,7 +2,7 @@
 
 Welcome! If you're reading this page, you probably want to program your own ATIS retrieval software. This can be used to either pull an ATIS from a live source, or generate one automatically.
 
-[TOC]
+__TOC__
 
 ## Architecture
 
