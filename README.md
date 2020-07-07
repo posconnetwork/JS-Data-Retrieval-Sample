@@ -105,6 +105,10 @@ async function run(icao) {
 module.exports = run
 ```
 
+## How do I test locally?
+
+To test `vhhh.js`, run `node test.js VHHH`. While it is not the exact way the script will be integrated, the sandbox ensures that only allowed modules may be loaded.
+
 ## I'm done, now what?
 
 Once you've written your script, please send it to [support@poscon.net](mailto:support@poscon.net) to be integrated.
