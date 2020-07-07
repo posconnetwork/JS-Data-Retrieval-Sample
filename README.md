@@ -83,7 +83,7 @@ const vhhh_url = "http://atis.cad.gov.hk/ATIS/ATISweb/atis.php"
  * 
  * @param {Document} document HTML document
  * @param {string} className CSS class name
- * @returns {string} Cleaned HTML string
+ * @returns {string} Concatenated plain text
  */
 const concat = (document, className) =>
     [...document.querySelectorAll(className)]
