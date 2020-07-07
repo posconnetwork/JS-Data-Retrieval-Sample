@@ -10,6 +10,7 @@ Welcome! If you're reading this page, you probably want to program your own ATIS
   * [Response Format](#response-format)
 - [Allowed Modules](#allowed-modules)
 - [Sample Code](#sample-code)
+- [How do I test locally?](#how-do-i-test-locally)
 - [I'm done, now what?](#im-done-now-what)
 - [Questions? Comments? Concerns?](#questions-comments-concerns)
 
