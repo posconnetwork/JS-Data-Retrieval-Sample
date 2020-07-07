@@ -9,7 +9,7 @@
  * @author Eamonn Nugent (@space55 on GitHub)
  * @author Timothy Wong (@wegylexy on GitHub)
  */
- 
+
 // Require the JSDOM & Axios packages
 const JSDOM = require("jsdom").JSDOM;
 const axios = require("axios")
@@ -24,11 +24,10 @@ const vhhh_url = "http://atis.cad.gov.hk/ATIS/ATISweb/atis.php"
  * @param {string} className CSS class name
  * @returns {string} Concatenated plain text
  */
-const concat = (document, className) =>
-    [...document.querySelectorAll(className)]
-        .map(n => n.textContent.trim())
-        .filter(t => t)
-        .join(" ");
+const concat = (document, className) => [...document.querySelectorAll(className)]
+    .map(n => n.textContent.trim())
+    .filter(t => t)
+    .join(" ");
 
 /**
  * Get the ATIS for a given ICAO
@@ -38,9 +37,12 @@ async function run(icao) {
     const doc = new JSDOM((await axios.get(vhhh_url)).data).window.document;
     return {
         arrival: concat(doc, ".data_name_arr"),
-        departure: concat(doc, ".data_name_dep")
+        departure: concat(doc, ".data_name_dep"),
+        body: "", // Should still be included
+        metar: "" // Not implemented in this code
     };
 }
+
 
 // Export the run function as the default export
 module.exports = run;

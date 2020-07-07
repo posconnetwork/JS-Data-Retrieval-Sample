@@ -99,7 +99,9 @@ async function run(icao) {
     const doc = new JSDOM((await axios.get(vhhh_url)).data).window.document;
     return {
         arrival: concat(doc, ".data_name_arr"),
-        departure: concat(doc, ".data_name_dep")
+        departure: concat(doc, ".data_name_dep"),
+        body: "", // Should still be included
+        metar: "" // Not implemented in this code
     };
 }
 
