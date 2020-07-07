@@ -140,7 +140,7 @@ module.exports = run
 
 ## How do I test locally?
 
-To test `vhhh.js`, run `node test.js VHHH`. While it is not the exact way the script will be integrated, the sandbox ensures that only allowed modules may be loaded.
+To test `VHHK.js`, run `node test.js VHHK`. While it is not the exact way the script will be integrated, the sandbox ensures that only allowed modules may be loaded.
 
 ## I'm done, now what?
 
