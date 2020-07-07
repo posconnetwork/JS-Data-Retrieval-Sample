@@ -62,48 +62,48 @@ If you would like a library added that is not currently available, please email 
 
 ## Sample Code
 
-The following code will retrieve the ATIS for Hong Kong International Airport (VHHH)
+The following code will retrieve the ATIS for Hong Kong International Airport (VHHH) in the VHHK FIR. Note: this code can also be viewed in [VHHK.js](VHHH.js)
 
-```javascript
+```javascript 
+// Require the JSDOM & Axios packages
 const JSDOM = require("jsdom").JSDOM;
 const axios = require("axios")
 
+// Define the URL to query against for the VHHH atis
 const vhhh_url = "http://atis.cad.gov.hk/ATIS/ATISweb/atis.php"
 
+/**
+ * Concatenate text content of HTML elements of the specified class in the specified document
+ * 
+ * @param {Document} document HTML document
+ * @param {string} className CSS class name
+ * @returns {string} Cleaned HTML string
+ */
+const concat = (document, className) =>
+    [...document.querySelectorAll(className)]
+        .map(n => n.textContent.trim())
+        .filter(t => t)
+        .join(" ");
 
-function cleanHTML(html) {
-
-    let ret = html.replace(/\n/g, " ")
-    ret = ret.replace(/\t/g, "")
-    ret = ret.replace(/[ ]+/g, " ")
-    ret = ret.replace(" ARRIVAL ", "")
-    ret = ret.replace(" DEPARTURE ", "")
-    ret = ret.replace(/[\u00A0]/g, "")
-    ret = ret.replace(/[ ]+/g, " ")
-    ret = ret.substring(0, ret.length - 1)
-    return ret
-}
-
+/**
+ * Get the ATIS for a given ICAO
+ * @param {string} icao ICAO of the airport to be queried
+ */
 async function run(icao) {
-    const response = await axios.get(vhhh_url);
-    const dom = new JSDOM(response.data);
-    const doc = dom.window.document
-    const col1 = [...doc.querySelectorAll(".data_outer_1 .width_left")];
-    const col2 = [...doc.querySelectorAll(".data_outer_3 .width_right")];
-
-    const col1text = cleanHTML(col1[0].textContent)
-    const col2text = cleanHTML(col2[0].textContent)
-    const ret = {
-        "arrival": col1text,
-        "departure": col2text,
-        "body": ""
-    }
-
-    return ret
+    const doc = new JSDOM((await axios.get(vhhh_url)).data).window.document;
+    return {
+        arrival: concat(doc, ".data_name_arr"),
+        departure: concat(doc, ".data_name_dep")
+    };
 }
 
-module.exports = run
+// Export the run function as the default export
+module.exports = run;
 ```
+
+## How do I test locally?
+
+To test `VHHK.js`, run `node test.js VHHK`. While it is not the exact way the script will be integrated, the sandbox ensures that only allowed modules may be loaded.
 
 ## I'm done, now what?
 
