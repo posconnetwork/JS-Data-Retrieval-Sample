@@ -79,14 +79,14 @@ const axios = require("axios")
 const vhhh_url = "http://atis.cad.gov.hk/ATIS/ATISweb/atis.php"
 
 /**
- * Concatenate text content of HTML elements of the specified class in the specified document
+ * Concatenate text content of HTML elements matching the specified CSS selector in the specified document
  * 
  * @param {Document} document HTML document
- * @param {string} className CSS class name
+ * @param {string} selector CSS selector
  * @returns {string} Concatenated plain text
  */
-const concat = (document, className) =>
-    [...document.querySelectorAll(className)]
+const concat = (document, selector) =>
+    [...document.querySelectorAll(selector)]
         .map(n => n.textContent.trim())
         .filter(t => t)
         .join(" ");
