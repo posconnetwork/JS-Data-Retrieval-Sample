@@ -1,6 +1,10 @@
-# POSCON JavaScript Automated ATIS Retrieval
+# POSCON JavaScript Automated Data Retrieval
 
-Welcome! If you're reading this page, you probably want to program your own ATIS retrieval software. This can be used to either pull an ATIS from a live source, or generate one automatically.
+Welcome! If you're reading this page, you probably want to program your own data retrieval software to be used by the POSCON. This can be used to:
+
+- Pull an ATIS from a live source
+- Pull a METAR from a live source
+- Generate an ATIS or METAR automatically
 
 <!-- toc -->
 
@@ -10,6 +14,7 @@ Welcome! If you're reading this page, you probably want to program your own ATIS
   * [Response Format](#response-format)
 - [Allowed Modules](#allowed-modules)
 - [Sample Code](#sample-code)
+- [How do I test locally?](#how-do-i-test-locally)
 - [I'm done, now what?](#im-done-now-what)
 - [Questions? Comments? Concerns?](#questions-comments-concerns)
 
@@ -19,7 +24,7 @@ Welcome! If you're reading this page, you probably want to program your own ATIS
 
 All user-supplied JavaScript for the purpose of retriving an ATIS is run in a v8 Isolate. What does that mean? It means your code is running in an isolated process, with no access to the host machine. We use this to ensure that no other ATIS retrieval code supplied by other users can impact the performance of your scripts.
 
-There may be _one_ file provided per FIR, which must contain all code for ATIS retrieval for any airports within the FIR. Unsafe functions, modules, and objects are also disabled, such as `process`, `eval`, and `fs`.
+There may be _one_ file provided per FIR, which must contain all code for retrieval for any airports within the FIR. Unsafe functions, modules, and objects are also disabled, such as `process`, `eval`, and `fs`.
 
 ### Recommended Development Environment
 
@@ -45,7 +50,8 @@ The desired response is either a `Promise` that resolves to this, or this direct
 {
     "arrival": "<arrival ATIS, if present>",
     "departure": "<departure ATIS, if present>",
-    "body": "<ATIS, if departure/arrival are not separated>"
+    "body": "<ATIS, if departure/arrival are not separated>",
+    "metar": "<METAR of the airport>"
 }
 ```
 
@@ -64,7 +70,7 @@ If you would like a library added that is not currently available, please email 
 
 The following code will retrieve the ATIS for Hong Kong International Airport (VHHH) in the VHHK FIR. Note: this code can also be viewed in [VHHK.js](VHHK.js)
 
-```javascript 
+```javascript
 // Require the JSDOM & Axios packages
 const JSDOM = require("jsdom").JSDOM;
 const axios = require("axios")
@@ -93,7 +99,9 @@ async function run(icao) {
     const doc = new JSDOM((await axios.get(vhhh_url)).data).window.document;
     return {
         arrival: concat(doc, ".data_name_arr"),
-        departure: concat(doc, ".data_name_dep")
+        departure: concat(doc, ".data_name_dep"),
+        body: "", // Should still be included
+        metar: "" // Not implemented in this code
     };
 }
 

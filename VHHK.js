@@ -9,7 +9,7 @@
  * @author Eamonn Nugent (@space55 on GitHub)
  * @author Timothy Wong (@wegylexy on GitHub)
  */
- 
+
 // Require the JSDOM & Axios packages
 const JSDOM = require("jsdom").JSDOM;
 const axios = require("axios")
@@ -38,9 +38,12 @@ async function run(icao) {
     const doc = new JSDOM((await axios.get(vhhh_url)).data).window.document;
     return {
         arrival: concat(doc, ".data_name_arr"),
-        departure: concat(doc, ".data_name_dep")
+        departure: concat(doc, ".data_name_dep"),
+        body: "", // Should still be included
+        metar: "" // Not implemented in this code
     };
 }
+
 
 // Export the run function as the default export
 module.exports = run;
