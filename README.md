@@ -62,7 +62,7 @@ If you would like a library added that is not currently available, please email 
 
 ## Sample Code
 
-The following code will retrieve the ATIS for Hong Kong International Airport (VHHH) in the VHHK FIR. Note: this code can also be viewed in [VHHK.js](VHHH.js)
+The following code will retrieve the ATIS for Hong Kong International Airport (VHHH) in the VHHK FIR. Note: this code can also be viewed in [VHHK.js](VHHK.js)
 
 ```javascript 
 // Require the JSDOM & Axios packages
