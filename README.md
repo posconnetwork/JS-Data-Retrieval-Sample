@@ -2,7 +2,18 @@
 
 Welcome! If you're reading this page, you probably want to program your own ATIS retrieval software. This can be used to either pull an ATIS from a live source, or generate one automatically.
 
-__TOC__
+<!-- toc -->
+
+- [Architecture](#architecture)
+  * [Recommended Development Environment](#recommended-development-environment)
+  * [Entrypoint](#entrypoint)
+  * [Response Format](#response-format)
+- [Allowed Modules](#allowed-modules)
+- [Sample Code](#sample-code)
+- [I'm done, now what?](#im-done-now-what)
+- [Questions? Comments? Concerns?](#questions-comments-concerns)
+
+<!-- tocstop -->
 
 ## Architecture
 
