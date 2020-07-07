@@ -1,0 +1,15 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "allowJs": true,
+        "checkJs": true,
+        "lib": [
+            "ES2019",
+            "DOM"
+        ],
+        "module": "CommonJS",
+        "moduleResolution": "Node",
+        "target": "ES2019",
+        "strict": true
+    }
+}

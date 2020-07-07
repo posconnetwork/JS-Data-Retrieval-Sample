@@ -2,16 +2,14 @@
 
 Welcome! If you're reading this page, you probably want to program your own data retrieval software to be used by the POSCON. This can be used to:
 
-- Pull an ATIS from a live source
-- Pull a METAR from a live source
-- Generate an ATIS or METAR automatically
+- Pull ATIS information, METAR, TAF, and/or SIGMET from live sources
+- Generate an ATIS, METAR, TAF, and/or SIGMET automatically
 
 <!-- toc -->
 
 - [Architecture](#architecture)
   * [Recommended Development Environment](#recommended-development-environment)
-  * [Entrypoint](#entrypoint)
-  * [Response Format](#response-format)
+  * [Interface](#interface)
 - [Allowed Modules](#allowed-modules)
 - [Sample Code](#sample-code)
 - [How do I test locally?](#how-do-i-test-locally)
@@ -22,96 +20,42 @@ Welcome! If you're reading this page, you probably want to program your own data
 
 ## Architecture
 
-All user-supplied JavaScript for the purpose of retriving an ATIS is run in a v8 Isolate. What does that mean? It means your code is running in an isolated process, with no access to the host machine. We use this to ensure that no other ATIS retrieval code supplied by other users can impact the performance of your scripts.
+All user-supplied JavaScript for the purpose of retriving an ATIS is run in a v8 Isolate. What does that mean? It means your code is being run in an isolated process, with no access to the host machine. We use this to ensure that no code supplied by other users may intefere with yours.
 
-There may be _one_ file provided per FIR, which must contain all code for retrieval for any airports within the FIR. Unsafe functions, modules, and objects are also disabled, such as `process`, `eval`, and `fs`.
+There may only be _one_ file provided per FIR, which must contain all code for retrieval for any airports within the FIR. Unsafe functions, modules, and objects are also disabled, such as `process`, `eval`, and `fs`.
 
 ### Recommended Development Environment
 
 Our servers use Node v14 on an Alpine image, and store scripts on a remote location.
 
-### Entrypoint
+### Interface
 
-When your script is called, the host machine looks for the default export, which must be an entrypoint in the following form:
+Your script must export a default function that returns `AerodromeInformation` or a `Promise` that completes with one.
 
-```javascript
-functionName(icao)
-
-module.exports = functionName
+```typescript
+export default function(icao: string): AerodromeInformation | PromiseLike<AerodromeInformation> { ... }
 ```
 
-The host will run the default export. It can return a `Promise`, but may not require or return a callback. It can also be an asynchronous function - it must simply accept a single argument (an ICAO-formatted airport identifier), and return either a `Promise` that resolves to data, or returns JSON data directly.
-
-### Response Format
-
-The desired response is either a `Promise` that resolves to this, or this directly:
-
-```json
-{
-    "arrival": "<arrival ATIS, if present>",
-    "departure": "<departure ATIS, if present>",
-    "body": "<ATIS, if departure/arrival are not separated>",
-    "metar": "<METAR of the airport>"
-}
-```
-
-**You may _only_ return _either_ body, or _both_ arrival and departure**
+Please refer to [spec.d.ts](spec.d.ts) for details.
 
 ## Allowed Modules
 
-The following modules are currently allowed to be `require`'d by a script:
+The following modules are currently allowed to be `import`'ed by a script:
 
 - [jsdom](https://www.npmjs.com/package/jsdom)
 - [axios](https://www.npmjs.com/package/axios)
 
-If you would like a library added that is not currently available, please email [support@poscon.net](mailto:support@poscon.net) with the library name and justification for its inclusion.
+If you would like a module added that is not currently available, please email [support@poscon.net](mailto:support@poscon.net) with the module name and justification for its inclusion.
 
 ## Sample Code
 
-The following code will retrieve the ATIS for Hong Kong International Airport (VHHH) in the VHHK FIR. Note: this code can also be viewed in [VHHK.js](VHHK.js)
+The sample code in [VHHK.ts](VHHK.ts) will retrieve information for Hong Kong International Airport (VHHH) in VHHK FIR.
 
-```javascript
-// Require the JSDOM & Axios packages
-const JSDOM = require("jsdom").JSDOM;
-const axios = require("axios")
-
-// Define the URL to query against for the VHHH atis
-const vhhh_url = "http://atis.cad.gov.hk/ATIS/ATISweb/atis.php"
-
-/**
- * Concatenate text content of HTML elements matching the specified CSS selector in the specified document
- * 
- * @param {Document} document HTML document
- * @param {string} selector CSS selector
- * @returns {string} Concatenated plain text
- */
-const concat = (document, selector) =>
-    [...document.querySelectorAll(selector)]
-        .map(n => n.textContent.trim())
-        .filter(t => t)
-        .join(" ");
-
-/**
- * Get the ATIS for a given ICAO
- * @param {string} icao ICAO of the airport to be queried
- */
-async function run(icao) {
-    const doc = new JSDOM((await axios.get(vhhh_url)).data).window.document;
-    return {
-        arrival: concat(doc, ".data_name_arr"),
-        departure: concat(doc, ".data_name_dep"),
-        body: "", // Should still be included
-        metar: "" // Not implemented in this code
-    };
-}
-
-// Export the run function as the default export
-module.exports = run;
-```
+The sample code in TypeScript embeds type annotations for easy understanding as well as context-aware code completion in popular IDEs. Run `npm run build` for plain JavaScript.
 
 ## How do I test locally?
 
-To test `VHHK.js`, run `node test.js VHHK`. While it is not the exact way the script will be integrated, the sandbox ensures that only allowed modules may be loaded.
+To test `VHHK.ts` (or `VHHK.js` if you write in JavaScript directly), run `npm test ./VHHK VHHH` where VHHK is the FIR and VHHH is the aerodrome.
 
 ## I'm done, now what?
 
