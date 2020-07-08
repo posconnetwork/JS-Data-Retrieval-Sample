@@ -49,7 +49,7 @@ The following modules are currently allowed to be `import`'ed by a script:
 - [jsdom](https://www.npmjs.com/package/jsdom)
 - [axios](https://www.npmjs.com/package/axios)
 
-If you would like a module added that is not currently available, please email [support@poscon.net](mailto:support@poscon.net) with the module name and justification for its inclusion.
+If you would like a module added that is not currently available, please open an issue with the title `Request to add <module name>`, and the body containing a brief description of how the module would be used, and justification for its inclusion.
 
 ## Sample Code
 
@@ -67,4 +67,4 @@ Once you've written your script, please send it to [support@poscon.net](mailto:s
 
 ## Questions? Comments? Concerns?
 
-If you have any questions about the library, please feel free to send us a message at [support@poscon.net](mailto:support@poscon.net)
+If you have any questions about the library, please feel free to open an issue, or send us a message at [support@poscon.net](mailto:support@poscon.net)
