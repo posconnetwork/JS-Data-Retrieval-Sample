@@ -49,7 +49,8 @@ const concat = (document: Document, selector: string): string =>
 export default async function (icao: string): Promise<AerodromeInformation> {
     switch (icao) {
         case "VHHH": {
-            const [atis, metar, taf, sigmet] = await Promise.all([
+            // Start fetching data with multiple promises to be awaited for later
+            const [atis, metar, taf, sigmet] = [
                 // ATIS
                 getDom(atis_url)
                     .then(doc => ({
@@ -65,17 +66,20 @@ export default async function (icao: string): Promise<AerodromeInformation> {
                 // SIGMET
                 axios.get(sigmet_url)
                     .then(res => res.data.content2.sigmet)
-            ].map(p => p.catch(e => "")));
+            ].map(p => p.catch(e => "")); // fulfil the promises with empty strings on error
             return {
                 atis: {
+                    // Pre-fill properties with empty strings
                     body: "", // as required by the interface to be a string
                     arrival: "", departure: "", // fallback to empty strings
-                    ...atis
+                    // Expand filled properties (if any) to replace the empty strings
+                    ...await atis
                 },
                 wx: {
-                    metar: metar,
-                    taf: taf,
-                    sigmet: sigmet
+                    // Awaits for other asynchronous tasks started earlier
+                    metar: await metar,
+                    taf: await taf,
+                    sigmet: await sigmet
                 }
             };
         }
