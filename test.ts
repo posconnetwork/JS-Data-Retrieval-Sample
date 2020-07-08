@@ -6,20 +6,21 @@
  * @author Timothy Wong (@wegylexy on GitHub)
  */
 import { NodeVM } from "vm2";
-const allowedModules = ["jsdom", "axios"];
+import { readFile } from "fs";
 (async () => {
-    console.log(JSON.parse(await new NodeVM({
+    const path = process.argv[2] + ".js",
+        read = new Promise<string>((res, rej) => readFile(path, "utf-8", (err, data) => {
+            if (err)
+                rej(err);
+            else
+                res(data);
+        }));
+    console.log(await new NodeVM({
         console: "off",
         eval: false,
         require: {
-            context: "sandbox",
-            external: true,
-            mock: allowedModules.reduce((a, m) => {
-                a[m] = require(m);
-                return a;
-            }, {} as { [name: string]: any }),
+            external: ["jsdom", "axios"],
             root: "."
-        },
-        wrapper: "none"
-    }).run(`"use strict";return (async () => JSON.stringify(await require("${process.argv[2]}").default("${process.argv[3]}")))();`, __filename)));
+        }
+    }).run(await read, path).default(process.argv[3]));
 })();
