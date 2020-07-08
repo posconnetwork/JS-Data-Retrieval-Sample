@@ -55,11 +55,11 @@ If you would like a module added that is not currently available, please email [
 
 The sample code in [VHHK.ts](VHHK.ts) will retrieve information for Hong Kong International Airport (VHHH) in VHHK FIR.
 
-The sample code in TypeScript embeds type annotations for easy understanding as well as context-aware code completion in popular IDEs. Run `npm run build` for plain JavaScript.
+The sample code in TypeScript embeds type annotations for easy understanding as well as context-aware code completion in popular IDEs. Run `npm run build` for CommonJS. You can also write in CommonJS directly.
 
 ## How do I test locally?
 
-To test `VHHK.ts` (or `VHHK.js` if you write in JavaScript directly), run `npm test ./VHHK VHHH` where VHHK is the FIR and VHHH is the aerodrome.
+To test `VHHK.ts` (or `VHHK.js` if you write in CommonJS directly), run `npm test ./VHHK VHHH` where VHHK is the FIR and VHHH is the aerodrome.
 
 ## I'm done, now what?
 
