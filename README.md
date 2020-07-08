@@ -36,7 +36,11 @@ Your script must export a default function that returns `AerodromeInformation` o
 export default function(icao: string): AerodromeInformation | PromiseLike<AerodromeInformation> { ... }
 ```
 
-Please refer to [spec.d.ts](spec.d.ts) for details.
+Please refer to [spec.d.ts](spec.d.ts) for details. When compiled to CommonJS, it becomes the following:
+
+```javascript
+exports.default = function(icao) { ... }
+```
 
 ## Allowed Modules
 
