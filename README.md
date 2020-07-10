@@ -59,7 +59,7 @@ If you would like a module added that is not currently available, please open an
 
 ## Sample Code
 
-The sample code in [VHHK.ts](VHHK.ts) will retrieve information for Hong Kong International Airport (VHHH) in VHHK FIR.
+The sample code in [VHHK.ts](VHHK.ts) will retrieve information for Hong Kong International Airport (VHHH) in VHHK FIR written in TypeScript. A CommonJS implementation is available in [VHHK_CommonJS.js](VHHK_CommonJS.js)
 
 The sample code in TypeScript embeds type annotations for easy understanding as well as context-aware code completion in popular IDEs. Run `npm run build` to build a CommonJS file from TypeScript. You can also write in CommonJS directly.
 
@@ -67,11 +67,11 @@ The sample code in TypeScript embeds type annotations for easy understanding as 
 
 ### CommonJS
 
-To test `VHHK.js`, run `npm test-js ./VHHK_CommonJS VHHH` where VHHH is the aerodrome.
+To test `VHHK.js`, run `npm run test-js ./VHHK_CommonJS VHHH` where VHHH is the aerodrome.
 
 ### TypeScript
 
-To test `VHHK.ts`, run `npm test ./VHHK VHHH` where VHHH is the aerodrome.
+To test `VHHK.ts`, run `npm run test ./VHHK VHHH` where VHHH is the aerodrome.
 
 ## I'm done, now what?
 

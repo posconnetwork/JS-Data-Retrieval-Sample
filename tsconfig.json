@@ -11,5 +11,8 @@
         "moduleResolution": "Node",
         "target": "ES2019",
         "strict": true
-    }
+    },
+    "exclude": [
+        "*.js"
+    ]
 }
