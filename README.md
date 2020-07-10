@@ -5,8 +5,6 @@ Welcome! If you're reading this page, you probably want to program your own data
 - Pull ATIS information, METAR, TAF, and/or SIGMET from live sources
 - Generate an ATIS, METAR, TAF, and/or SIGMET automatically
 
----
-
 ## Table of Contents
 
 <!-- toc -->
@@ -51,8 +49,6 @@ Please refer to [spec.d.ts](spec.d.ts) for details. When compiled to CommonJS, i
 exports.default = function(icao) { ... }
 ```
 
----
-
 ## Allowed Modules
 
 The following modules are currently allowed to be `import`'ed by a script:
@@ -62,15 +58,11 @@ The following modules are currently allowed to be `import`'ed by a script:
 
 If you would like a module added that is not currently available, please open an issue with the title `Request to add <module name>`, and the body containing a brief description of how the module would be used, and justification for its inclusion.
 
----
-
 ## Sample Code
 
 The sample code in [VHHK.ts](VHHK.ts) will retrieve information for Hong Kong International Airport (VHHH) in VHHK FIR.
 
 The sample code in TypeScript embeds type annotations for easy understanding as well as context-aware code completion in popular IDEs. Run `npm run build` to build a CommonJS file from TypeScript. You can also write in CommonJS directly.
-
----
 
 ## How do I test locally?
 
@@ -81,8 +73,6 @@ To test `VHHK.js`, run `npm test-js ./VHHK VHHH` where VHHH is the aerodrome.
 ### TypeScript
 
 To test `VHHK.ts`, run `npm test ./VHHK VHHH` where VHHH is the aerodrome.
-
----
 
 ## I'm done, now what?
 
@@ -102,13 +92,9 @@ There are a few requirements for your file. They are as such:
 
 Once you've written your script, please send it to [support@poscon.net](mailto:support@poscon.net) to be integrated.
 
----
-
 ## Questions? Comments? Concerns?
 
 If you have any questions about the library, please feel free to open an issue, or send us a message at [support@poscon.net](mailto:support@poscon.net)
-
----
 
 ## Credits
 
