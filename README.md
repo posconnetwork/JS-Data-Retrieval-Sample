@@ -83,7 +83,7 @@ There are a few requirements for your file. They are as such:
   - `AerodromeInformation`, as defined in [spec.d.ts](spec.d.ts)
   - A promise that resolves to `AerodromeInformation`
 - All unused or unknown fields must be blank values
-- Only _**ONE**_ of these two may be defined:
+- Only _**ONE**_ of these two may be populated with anything other than an empty value:
   - ATIS `body`
   - ATIS `departure` and `arrival`
 
