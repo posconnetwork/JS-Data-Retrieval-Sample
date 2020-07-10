@@ -55,7 +55,7 @@ If you would like a module added that is not currently available, please open an
 
 The sample code in [VHHK.ts](VHHK.ts) will retrieve information for Hong Kong International Airport (VHHH) in VHHK FIR.
 
-The sample code in TypeScript embeds type annotations for easy understanding as well as context-aware code completion in popular IDEs. Run `npm run build` for CommonJS. You can also write in CommonJS directly.
+The sample code in TypeScript embeds type annotations for easy understanding as well as context-aware code completion in popular IDEs. Run `npm run build` to build the CommonJS. You can also write in CommonJS directly.
 
 ## How do I test locally?
 
