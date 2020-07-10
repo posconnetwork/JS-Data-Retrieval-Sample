@@ -97,5 +97,5 @@ If you have any questions about the library, please feel free to open an issue, 
 
 ## Credits
 
-- Server software by Eamonn Nugent ([@space55](github.com/space55))
-- Client side TypeScript, documentation assistance, and testing by Tim Wong ([@wegylexy](github.com/wegylexy))
+- Server software by Eamonn Nugent ([@space55](https://github.com/space55))
+- Client side TypeScript, documentation assistance, and testing by Tim Wong ([@wegylexy](https://github.com/wegylexy))
