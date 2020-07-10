@@ -1,8 +1,8 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
-        "allowJs": true,
-        "checkJs": true,
+        "allowJs": false,
+        "checkJs": false,
         "lib": [
             "ES2019",
             "DOM"
@@ -11,8 +11,5 @@
         "moduleResolution": "Node",
         "target": "ES2019",
         "strict": true
-    },
-    "exclude": [
-        "*.js"
-    ]
+    }
 }
