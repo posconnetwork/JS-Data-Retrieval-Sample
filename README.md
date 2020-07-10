@@ -67,7 +67,7 @@ The sample code in TypeScript embeds type annotations for easy understanding as 
 
 ### CommonJS
 
-To test `VHHK.js`, run `npm run test-js ./VHHK_CommonJS VHHH` where VHHH is the aerodrome.
+To test `VHHK_CommonJS.js`, run `npm run test-js ./VHHK_CommonJS VHHH` where VHHH is the aerodrome.
 
 ### TypeScript
 
