@@ -24,7 +24,6 @@ Welcome! If you're reading this page, you probably want to program your own data
 
 <!-- tocstop -->
 
----
 ## Architecture
 
 All user-supplied JavaScript for the purpose of retriving an ATIS is run in a v8 Isolate. What does that mean? It means your code is being run in an isolated process, with no access to the host machine. We use this to ensure that no code supplied by other users may intefere with yours.
