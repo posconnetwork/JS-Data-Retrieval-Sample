@@ -10,7 +10,9 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "npm run build && npm rum test-built --",
+    "test": "npm run test-ts",
+    "test-ts": "npm run build && npm rum test-built --",
+    "test-js": "npm rum test-built --",
     "test-built": "node test.js"
   }
 }
