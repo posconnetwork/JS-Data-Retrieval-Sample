@@ -54,6 +54,7 @@ The following modules are currently allowed to be `import`'ed by a script:
 
 - [jsdom](https://www.npmjs.com/package/jsdom)
 - [axios](https://www.npmjs.com/package/axios)
+- [xml2js](https://www.npmjs.com/package/xml2js)
 
 If you would like a module added that is not currently available, please open an issue with the title `Request to add <module name>`, and the body containing a brief description of how the module would be used, and justification for its inclusion.
 
