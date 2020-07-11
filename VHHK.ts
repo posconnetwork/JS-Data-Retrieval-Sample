@@ -16,8 +16,8 @@ import axios from "axios";
 
 // Define the URL to query against for the VHHH atis
 const atis_url = "http://atis.cad.gov.hk/ATIS/ATISweb/atis.php",
-    metar_url = "http://www.hko.gov.hk/aviat/metar_eng_revamp.json",
-    taf_url = "http://www.hko.gov.hk/aviat/taf_decode_eng_revamp.json",
+    weather_url = (type: "metar" | "taf", station: string) =>
+        `https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=${type}s&requestType=retrieve&format=xml&hoursBeforeNow=12&mostRecent=true&stationString=${station}`,
     sigmet_url = "http://www.hko.gov.hk/aviat/sigmet_data_e.json";
 
 /**
@@ -51,27 +51,39 @@ export default async function (icao: string): Promise<AerodromeInformation> {
         case "VHHH": {
             // Start fetching data with multiple promises to be awaited for later
             const [atis, metar, taf, sigmet] = [
+
                 // ATIS
-                getDom(atis_url)
-                    .then(doc => ({
-                        arrival: concat(doc, ".data_name_arr"),
-                        departure: concat(doc, ".data_name_dep")
-                    })),
+                getDom(atis_url).then(doc => ({
+                    arrival: concat(doc, ".data_name_arr"),
+                    departure: concat(doc, ".data_name_dep")
+                })),
+
                 // METAR
-                getDom(metar_url, data => data.metar_decode_eng_json.content.table.content)
-                    .then(doc => concat(doc, "table strong ~ p")),
+                getDom(
+                    weather_url("metar", icao)
+                ).then(
+                    doc => concat(doc, "raw_text")
+                ),
+
                 // TAF
-                getDom(taf_url, data => data.taf_decode_eng_json.content1.table1.content)
-                    .then(doc => concat(doc, "table strong ~ p")),
+                getDom(
+                    weather_url("taf", icao)
+                ).then(
+                    doc => concat(doc, "raw_text")
+                ),
+
                 // SIGMET
-                axios.get(sigmet_url)
-                    .then(res => res.data.content2.sigmet)
+                axios.get(sigmet_url).then(
+                    res => res.data.content2.sigmet || ""
+                )
+
             ].map(p => p.catch(e => "")); // fulfil the promises with empty strings on error
             return {
                 atis: {
                     // Pre-fill properties with empty strings
                     body: "", // as required by the interface to be a string
-                    arrival: "", departure: "", // fallback to empty strings
+                    arrival: "",
+                    departure: "",
                     // Expand filled properties (if any) to replace the empty strings
                     ...await atis
                 },
