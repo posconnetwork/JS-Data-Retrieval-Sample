@@ -64,15 +64,21 @@ The sample code in [VHHK.ts](VHHK.ts) will retrieve information for Hong Kong In
 
 The sample code in TypeScript embeds type annotations for easy understanding as well as context-aware code completion in popular IDEs. Run `npm run build` to build a CommonJS file from TypeScript. You can also write in CommonJS directly.
 
+[VABF.ts](VABF.ts) is an advanced sample involving an append-only cookie jar and session reuse.
+
 ## How do I test locally?
+
+Run `npm install` to install dependencies for testing, and then use the test script as below.
 
 ### CommonJS
 
-To test `VHHK_CommonJS.js`, run `npm run test-js ./VHHK_CommonJS VHHH` where VHHH is the aerodrome.
+To test `VHHK_CommonJS.js` with station VHHH, run `npm run test-js ./VHHK_CommonJS VHHH`.
 
 ### TypeScript
 
-To test `VHHK.ts`, run `npm run test ./VHHK VHHH` where VHHH is the aerodrome.
+To test `VHHK.ts` with station VHHH, run `npm test ./VHHK VHHH`.
+
+To test `VABF.ts` with stations VAAH, VEAT, VIAR, and VOBL, run `npm test ./VABF VAAH VEAT VIAR VOBL`.
 
 ## I'm done, now what?
 

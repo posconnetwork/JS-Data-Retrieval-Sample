@@ -14,13 +14,31 @@ import { readFile } from "fs";
                 rej(err);
             else
                 res(data);
-        }));
-    console.log(await new NodeVM({
-        console: "off",
-        eval: false,
-        require: {
-            external: ["jsdom", "axios"],
-            root: "."
+        })),
+        retrieve = new NodeVM({
+            console: "off",
+            eval: false,
+            require: {
+                external: ["jsdom", "axios"],
+                root: "."
+            }
+        }).run(await read, path).default;
+
+    // // Test in parallel
+    // console.log(Object.assign.apply({}, await Promise.all(process.argv.slice(3).map(async (icao: string) => {
+    //     try {
+    //         return { [icao]: await retrieve(icao) };
+    //     } catch (e) {
+    //         return { [icao]: e };
+    //     }
+    // })) as any));
+
+    // Test in series
+    await Promise.all(process.argv.slice(3).map(async icao => {
+        try {
+            console.log(await retrieve(icao));
+        } catch (e) {
+            console.error(`Oops, it didn't work for ${icao} due to ${e}.`);
         }
-    }).run(await read, path).default(process.argv[3]));
+    }));
 })();
