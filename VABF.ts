@@ -5,56 +5,15 @@
  *
  * @license MIT
  *
- * @author Timothy Wong (@wegylexy on GitHub)
+ * @author Rahul Singh (@drph4nt0m on GitHub)
  */
 
 import { AerodromeInformation } from "./spec";
-// Require the JSDOM & Axios packages
-import { JSDOM } from "jsdom";
-import axios, { AxiosInstance } from "axios";
+// Require the Axios package
+import axios from "axios";
 
-/**
- * Inject cookie interceptors to an instance of axios
- * @param instance The instance of axios
- * @returns A function that returns the current cookies delimited by semi-colon (;)
- */
-function interceptCookies(instance: AxiosInstance): () => string {
-    let cookies: { [name: string]: string } = {};
-    const toString = () => Object.keys(cookies).map(n => `${n}=${cookies[n]}`).join(";");
-    // Inject the request interceptor
-    instance.interceptors.request.use(req => ({
-        ...req,
-        headers: {
-            ...req.headers,
-            cookie: toString()
-        },
-        maxRedirects: 0, // intercept redirect
-        validateStatus: s => s >= 200 && s <= 302 // validate redirect
-    }));
-    // Inject the response interceptor
-    instance.interceptors.response.use(async res => {
-        (res.headers["set-cookie"] || [])
-            .map((c: string) => c.split(";")[0])
-            .reduce((all: typeof cookies, c: string) => {
-                const cookie = c.match(/^([^=]+)=(.*)$/);
-                if (cookie)
-                    all[cookie[1]] = cookie[2];
-                return all;
-            }, cookies);
-        return res.status > 300 ?
-            await instance.get(res.headers["location"]) : // follow redirect
-            res;
-    });
-    return toString
-}
-
-// Create an instance of axios
-const atis_instance = axios.create({
-    baseURL: "http://www.acdm.in",
-    timeout: 5000 // 5 seconds
-}),
-    atis_cookies = interceptCookies(atis_instance),
-    atis_login = "username=testing123&submit=Submit&password=testing123";
+// Define the URL to query against for the VABF atis
+const atis_url = "https://services.poscon.in/atis";
 
 /**
  * Get ATIS text for the specified station
@@ -62,24 +21,8 @@ const atis_instance = axios.create({
  * @returns A Promise that completes with the ATIS text
  */
 const getAtis = async (icao: string) => {
-    let document!: Document;
-    for (let retry = 2; retry--;) { // retry after login (if required)
-        if (atis_cookies()) { // only try with non-empty cookie
-            // Get a document with ATIS text or a login form
-            document = new JSDOM((
-                // Await for a response from the URL
-                await atis_instance.get(`/ShowStations.php?q=${icao}`)
-            ).data).window.document;
-            // Detect login form
-            if (!document.querySelector("form.form-signin"))
-                // Stop trying to login
-                break;
-        }
-        // Login
-        await atis_instance.post("/index.php", atis_login);
-    }
-    // Find next sibling <td> of the first <td> and return its text content
-    return document.querySelector("td + td")!.textContent; // throw if not found
+    const res = await axios.get(`${atis_url}/${icao}`)
+    return res.data.atis;
 };
 
 // Export default function as declared in spec.d.ts
