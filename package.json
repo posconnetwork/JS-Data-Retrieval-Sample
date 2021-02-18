@@ -1,11 +1,11 @@
 {
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "jsdom": "^16.2.2"
   },
   "devDependencies": {
-    "typescript": "^3.9.6",
     "@types/jsdom": "^16.2.3",
+    "typescript": "^3.9.6",
     "vm2": "^3.9.2"
   },
   "scripts": {
