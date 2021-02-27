@@ -1,7 +1,7 @@
 /**
- * VABF.ts
+ * VIDF.ts
  *
- * Module to retrieve information of airports in VABF FIR
+ * Module to retrieve information of airports in VIDF FIR
  *
  * @license MIT
  *
@@ -12,7 +12,7 @@ import { AerodromeInformation } from "./spec";
 // Require the Axios package
 import axios from "axios";
 
-// Define the URL to query against for the VABF atis
+// Define the URL to query against for the VIDF atis
 const atis_url = "https://services.poscon.in/atis";
 
 /**
@@ -28,7 +28,7 @@ const getAtis = async (icao: string) => {
 // Export default function as declared in spec.d.ts
 export default async function (icao: string): Promise<AerodromeInformation> {
     switch (icao) {
-        case "VAAH": case "VAAU": case "VABB": case "VABO": case "VABP": case "VABV": case "VAGD": case "VAID": case "VAJB": case "VANP": case "VAPO": case "VARK": case "VASU": case "VAUD":
+        case "VIAR": case "VIBR": case "VIDN": case "VIDP": case "VIJP": case "VILK":
             return {
                 atis: {
                     body: await getAtis(icao) || "",
@@ -42,5 +42,5 @@ export default async function (icao: string): Promise<AerodromeInformation> {
                 },
             };
     }
-    throw new Error(`${icao} is not supported in VABF.`);
+    throw new Error(`${icao} is not supported in VIDF.`);
 }
